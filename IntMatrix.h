@@ -20,11 +20,12 @@ namespace mtm {
         int width() const;
         int size() const;
         friend std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
-        IntMatrix Identity(const Dimensions dim);
+        static IntMatrix Identity(int dim;
         IntMatrix transpose() const ;
         friend IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
         IntMatrix operator-() const ;
     };
-
+    std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
+    IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
 }
 #endif //HW3_INTMATRIX_H

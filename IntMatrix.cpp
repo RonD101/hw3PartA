@@ -33,12 +33,12 @@ IntMatrix::~IntMatrix()
     delete[] row;
 }
 
-IntMatrix IntMatrix::Identity(const Dimensions dim) {
-    IntMatrix matrix = IntMatrix(dim);
-    row = new int*[matrix.dim_row];
-    for (int i = 0; i < matrix.dim_row; ++i) {
-        row[i][i] = 1;
-    }
+IntMatrix IntMatrix::Identity(int dim) {
+    Dimensions d(dim,dim);
+    IntMatrix matrix = IntMatrix(d);
+//    for (int i = 0; i < matrix.dim_row; ++i) {
+//        matrix(i,i) = 1;
+//    }
     return matrix;
 }
 
@@ -52,6 +52,7 @@ std::ostream& mtm::operator<<(std::ostream& os, const IntMatrix& matrix) {
         }
     }
     os << (printMatrix(flatMatrix, dims));
+    delete[] flatMatrix;
     return os;
 }
 
