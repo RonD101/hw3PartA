@@ -2,6 +2,8 @@
 #include "IntMatrix.h"
 
 using namespace mtm;
+using std::cout;
+using std::endl;
 
 IntMatrix::IntMatrix(const Dimensions& dimensions, int value)
 {
@@ -103,13 +105,17 @@ IntMatrix IntMatrix::transpose() const
 {
     Dimensions d(this->width(),this->height());
     IntMatrix matrix(d);
+    cout << "hey0" << endl;
     for (int j = 0; j < matrix.height(); ++j)
     {
+        cout << "hey1" << endl;
         for (int i = 0; i < matrix.width(); ++i)
         {
+            cout << "hey2" << endl;
             matrix.row[j][i] = row[i][j];
         }
     }
+    cout << "hey3" << endl;
     return matrix;
 }
 
@@ -136,4 +142,21 @@ IntMatrix IntMatrix::operator-() const {
         }
     }
     return matrix;
+}
+
+IntMatrix::IntMatrix(const IntMatrix &matrix) {
+    //allocating rows
+    row = new int *[dim_row];
+    //allocating cols
+    for (int i = 0; i < dim_row; ++i)
+    {
+        row[i] = new int[dim_col];
+    }
+    dim_row = matrix.height();
+    dim_col = matrix.width();
+    for (int i = 0; i < matrix.height() ; ++i) {
+        for (int j = 0; j < matrix.width(); ++j) {
+            row[i][j] = matrix.row[i][j];
+        }
+    }
 }

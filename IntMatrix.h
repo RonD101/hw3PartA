@@ -20,10 +20,11 @@ namespace mtm {
         int width() const;
         int size() const;
         friend std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
-        static IntMatrix Identity(int dim;
+        static IntMatrix Identity(int dim);
         IntMatrix transpose() const ;
         friend IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
         IntMatrix operator-() const ;
+        IntMatrix(const IntMatrix& matrix);
     };
     std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
     IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
