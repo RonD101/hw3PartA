@@ -13,6 +13,9 @@ namespace mtm {
         Dimensions dim;
         Dimensions getDimensions() const;
     public:
+        class Iterator;
+        Iterator begin() const;
+        Iterator end() const;
         explicit IntMatrix(const Dimensions& dimensions, int value = 0);
         ~IntMatrix();
         IntMatrix& operator=(const IntMatrix& matrix);
@@ -27,6 +30,8 @@ namespace mtm {
         IntMatrix(const IntMatrix& matrix);
         int& operator()(int row_num,int col_num);
         const int& operator()(int row_num,int col_num) const;
+        friend IntMatrix operator-(const IntMatrix& matrix1, const IntMatrix& matrix2);
+        IntMatrix& operator+=(const int value);
     };
     std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
     IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
@@ -36,5 +41,25 @@ namespace mtm {
     IntMatrix operator>=(IntMatrix& matrix, int num);
     IntMatrix operator==(IntMatrix& matrix, int num);
     IntMatrix operator!=(IntMatrix& matrix, int num);
+    IntMatrix operator-(const IntMatrix& matrix1, const IntMatrix& matrix2);
+    IntMatrix operator+(const IntMatrix& matrix, const int value);
+    IntMatrix operator+(const int value, const IntMatrix& matrix);
+    bool any(const IntMatrix& matrix);
+    bool all(const IntMatrix& matrix);
+
+    class IntMatrix::Iterator{
+        const IntMatrix* matrix;
+        int index;
+        friend class IntMatrix;
+        Iterator(const IntMatrix* matrix, int index);
+    public:
+        const int& operator*() const;
+        Iterator& operator++(); // prefix (++it)
+        Iterator operator++(int);
+        bool operator==(const Iterator& it) const;
+        bool operator!=(const Iterator& it) const;
+        Iterator(const Iterator&) = default;
+        Iterator& operator=(const Iterator&) = default;
+    };
 }
 #endif //HW3_INTMATRIX_H

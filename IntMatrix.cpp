@@ -271,3 +271,53 @@ int& IntMatrix::operator()(int row_num, int col_num) {
 const int& IntMatrix::operator()(int row_num, int col_num) const {
     return row[row_num - 1][col_num - 1];
 }
+
+IntMatrix mtm::operator-(const IntMatrix &matrix1, const IntMatrix &matrix2) {
+    return IntMatrix(matrix1 + -matrix2);
+}
+
+IntMatrix& IntMatrix::operator+=(const int value) {
+    IntMatrix m(this->getDimensions(),value);
+    *this = *this + m;
+    return *this;
+}
+
+IntMatrix mtm::operator+(const IntMatrix& matrix, const int value){
+    IntMatrix m(matrix);
+    m += value;
+    return m;
+}
+
+IntMatrix mtm::operator+(const int value, const IntMatrix& matrix){
+    return matrix + value;
+}
+
+bool mtm::any(const IntMatrix& matrix)
+{
+    for (int i = 1; i <= matrix.height(); ++i)
+    {
+        for (int j = 1; j <= matrix.width(); ++j)
+        {
+            if(matrix(i,j) != 0)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool mtm::all(const IntMatrix& matrix)
+{
+    for (int i = 1; i <= matrix.height(); ++i)
+    {
+        for (int j = 1; j <= matrix.width(); ++j)
+        {
+            if(matrix(i,j) == 0)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}

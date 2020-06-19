@@ -39,6 +39,13 @@ int main() {
     IntMatrix mLS = mc != 6;
     cout << mLS << endl;
     cout << mc << endl;
+    m2(1,1) += 1;
+    cout << m2 - mc << endl;
+    (m2 += -1) += 3;
+    cout << m2 << endl;
+    cout << -1 + (m2 + 5) << endl;
+    cout << "all: " << all(m3) << " \nall+1:" << all(m3 + 1) << endl;
+    cout << "any: " << any(m3) << " \nany+1:" << any(IntMatrix(d)) << endl;
 //    int* n = new int;
 //    *n = 2;
     return 0;
