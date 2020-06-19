@@ -321,3 +321,11 @@ bool mtm::all(const IntMatrix& matrix)
     }
     return true;
 }
+
+bool IntMatrix::Iterator::operator==(const IntMatrix::Iterator &it) const {
+    return this->index == it.index;
+}
+
+bool IntMatrix::Iterator::operator!=(const IntMatrix::Iterator &it) const {
+    return this->index != it.index;
+}
