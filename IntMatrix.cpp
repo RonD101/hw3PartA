@@ -2,13 +2,11 @@
 #include "IntMatrix.h"
 
 using namespace mtm;
-using std::cout;
-using std::endl;
 
-IntMatrix::IntMatrix(const Dimensions& dimensions, int value)
+IntMatrix::IntMatrix(const Dimensions& dimensions, int value):dim(dimensions)
 {
-    dim_row = dimensions.getRow();
-    dim_col = dimensions.getCol();
+    int dim_row = dimensions.getRow();
+    int dim_col = dimensions.getCol();
     //allocating rows
     row = new int *[dim_row];
     //allocating cols
@@ -28,7 +26,7 @@ IntMatrix::IntMatrix(const Dimensions& dimensions, int value)
 
 IntMatrix::~IntMatrix()
 {
-    for (int i = 0; i < dim_row; ++i)
+    for (int i = 0; i < dim.getRow(); ++i)
     {
         delete[] row[i];
     }
@@ -38,9 +36,9 @@ IntMatrix::~IntMatrix()
 IntMatrix IntMatrix::Identity(int dim) {
     Dimensions d(dim,dim);
     IntMatrix matrix = IntMatrix(d);
-//    for (int i = 0; i < matrix.dim_row; ++i) {
-//        matrix(i,i) = 1;
-//    }
+    for (int i = 1; i <= matrix.height(); ++i) {
+        matrix(i,i) = 1;
+    }
     return matrix;
 }
 
@@ -48,9 +46,9 @@ std::ostream& mtm::operator<<(std::ostream& os, const IntMatrix& matrix) {
     int* flatMatrix = new int[matrix.size()];
     int counter = 0;
     Dimensions dims(matrix.height(), matrix.width());
-    for (int i = 0; i < matrix.height(); ++i) {
-        for (int j = 0; j < matrix.width(); ++j) {
-            flatMatrix[counter++] = matrix.row[i][j];
+    for (int i = 1; i <= matrix.height(); ++i) {
+        for (int j = 1; j <= matrix.width(); ++j) {
+            flatMatrix[counter++] = matrix(i,j);
         }
     }
     os << (printMatrix(flatMatrix, dims));
@@ -59,15 +57,15 @@ std::ostream& mtm::operator<<(std::ostream& os, const IntMatrix& matrix) {
 }
 
 int IntMatrix::width() const {
-    return dim_col;
+    return dim.getCol();
 }
 
 int IntMatrix::height() const {
-    return dim_row;
+    return dim.getRow();
 }
 
 int IntMatrix::size() const {
-    return dim_row*dim_col;
+    return (this->height())*(this->width());
 }
 
 IntMatrix& IntMatrix::operator=(const IntMatrix& matrix)
@@ -76,26 +74,25 @@ IntMatrix& IntMatrix::operator=(const IntMatrix& matrix)
     {
         return *this;
     }
-    for (int i = 0; i < dim_row; ++i)
+    for (int i = 0; i < this->height(); ++i)
     {
         delete[] row[i];
     }
     delete[] row;
-    dim_row = matrix.height();
-    dim_col = matrix.width();
+    dim = matrix.dim;
     //allocating rows
-    row = new int *[dim_row];
+    row = new int *[this->height()];
     //allocating cols
-    for (int i = 0; i < dim_row; ++i)
+    for (int i = 0; i < this->height(); ++i)
     {
-        row[i] = new int[dim_col];
+        row[i] = new int[this->width()];
     }
     //setting new values
-    for (int j = 0; j < dim_row; ++j)
+    for (int j = 1; j <= this->height(); ++j)
     {
-        for (int i = 0; i < dim_col; ++i)
+        for (int i = 1; i <= this->width(); ++i)
         {
-            row[j][i] = matrix.row[j][i];
+            (*this)(j,i) = matrix(j,i);
         }
     }
     return *this;
@@ -105,58 +102,62 @@ IntMatrix IntMatrix::transpose() const
 {
     Dimensions d(this->width(),this->height());
     IntMatrix matrix(d);
-    cout << "hey0" << endl;
-    for (int j = 0; j < matrix.height(); ++j)
+    for (int j = 1; j <= matrix.height(); ++j)
     {
-        cout << "hey1" << endl;
-        for (int i = 0; i < matrix.width(); ++i)
+        for (int i = 1; i <= matrix.width(); ++i)
         {
-            cout << "hey2" << endl;
-            matrix.row[j][i] = row[i][j];
+            matrix(j,i) = (*this)(i,j);
         }
     }
-    cout << "hey3" << endl;
     return matrix;
 }
 
 IntMatrix mtm::operator+(const IntMatrix &matrix1, const IntMatrix &matrix2)
 {
-    Dimensions d(matrix1.height(),matrix1.width());
-    IntMatrix matrix(d);
-    for (int i = 0; i < matrix.height(); ++i) {
-        for (int j = 0; j < matrix.width(); ++j) {
-            matrix.row[i][j] = matrix1.row[i][j] + matrix2.row[i][j];
+    IntMatrix matrix(matrix1.getDimensions());
+    for (int i = 1; i <= matrix.height(); ++i) {
+        for (int j = 1; j <= matrix.width(); ++j) {
+            matrix(i,j) = matrix1(i,j) + matrix2(i,j);
         }
     }
     return matrix;
 }
 
 IntMatrix IntMatrix::operator-() const {
-    Dimensions d(this->height(),this->width());
-    IntMatrix matrix(d);
-    for (int j = 0; j < matrix.height(); ++j)
+    IntMatrix matrix(this->getDimensions());
+    for (int j = 1; j <= matrix.height(); ++j)
     {
-        for (int i = 0; i < matrix.width(); ++i)
+        for (int i = 1; i <= matrix.width(); ++i)
         {
-            matrix.row[j][i] = -row[j][i];
+            matrix(j,i) = -(*this)(j,i);
         }
     }
     return matrix;
 }
 
-IntMatrix::IntMatrix(const IntMatrix &matrix) {
+IntMatrix::IntMatrix(const IntMatrix &matrix):dim(matrix.height(),matrix.width()) {
     //allocating rows
-    row = new int *[dim_row];
+    row = new int *[matrix.height()];
     //allocating cols
-    for (int i = 0; i < dim_row; ++i)
+    for (int i = 0; i < matrix.height(); ++i)
     {
-        row[i] = new int[dim_col];
+        row[i] = new int[matrix.width()];
     }
-    dim_row = matrix.height();
-    dim_col = matrix.width();
-    for (int i = 0; i < matrix.height() ; ++i) {
-        for (int j = 0; j < matrix.width(); ++j) {
-            row[i][j] = matrix.row[i][j];
+    for (int i = 1; i <= this->height() ; ++i) {
+        for (int j = 1; j <= this->width(); ++j) {
+            (*this)(i,j) = matrix(i,j);
         }
     }
+}
+
+Dimensions IntMatrix::getDimensions() const {
+    return this->dim;
+}
+
+int& IntMatrix::operator()(int row_num, int col_num) {
+    return row[row_num - 1][col_num - 1];
+}
+
+const int& IntMatrix::operator()(int row_num, int col_num) const {
+    return row[row_num - 1][col_num - 1];
 }

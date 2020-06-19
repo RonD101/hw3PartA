@@ -10,8 +10,8 @@
 namespace mtm {
     class IntMatrix {
         int** row;
-        int dim_row;
-        int dim_col;
+        Dimensions dim;
+        Dimensions getDimensions() const;
     public:
         explicit IntMatrix(const Dimensions& dimensions, int value = 0);
         ~IntMatrix();
@@ -25,6 +25,8 @@ namespace mtm {
         friend IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
         IntMatrix operator-() const ;
         IntMatrix(const IntMatrix& matrix);
+        int& operator()(int row_num,int col_num);
+        const int& operator()(int row_num,int col_num) const;
     };
     std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
     IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
