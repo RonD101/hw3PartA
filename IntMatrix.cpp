@@ -36,7 +36,7 @@ IntMatrix::~IntMatrix()
 IntMatrix IntMatrix::Identity(int dim) {
     Dimensions d(dim,dim);
     IntMatrix matrix = IntMatrix(d);
-    for (int i = 1; i <= matrix.height(); ++i) {
+    for (int i = 0; i < matrix.height(); ++i) {
         matrix(i,i) = 1;
     }
     return matrix;
@@ -46,8 +46,8 @@ std::ostream& mtm::operator<<(std::ostream& os, const IntMatrix& matrix) {
     int* flatMatrix = new int[matrix.size()];
     int counter = 0;
     Dimensions dims(matrix.height(), matrix.width());
-    for (int i = 1; i <= matrix.height(); ++i) {
-        for (int j = 1; j <= matrix.width(); ++j) {
+    for (int i = 0; i < matrix.height(); ++i) {
+        for (int j = 0; j < matrix.width(); ++j) {
             flatMatrix[counter++] = matrix(i,j);
         }
     }
@@ -88,9 +88,9 @@ IntMatrix& IntMatrix::operator=(const IntMatrix& matrix)
         row[i] = new int[this->width()];
     }
     //setting new values
-    for (int j = 1; j <= this->height(); ++j)
+    for (int j = 0; j < this->height(); ++j)
     {
-        for (int i = 1; i <= this->width(); ++i)
+        for (int i = 0; i < this->width(); ++i)
         {
             (*this)(j,i) = matrix(j,i);
         }
@@ -101,9 +101,9 @@ IntMatrix& IntMatrix::operator=(const IntMatrix& matrix)
 IntMatrix mtm::operator<(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) < num)
             {
@@ -120,9 +120,9 @@ IntMatrix mtm::operator<(IntMatrix& matrix, int num)
 IntMatrix mtm::operator<=(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) <= num)
             {
@@ -138,9 +138,9 @@ IntMatrix mtm::operator<=(IntMatrix& matrix, int num)
 IntMatrix mtm::operator>(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) > num)
             {
@@ -156,9 +156,9 @@ IntMatrix mtm::operator>(IntMatrix& matrix, int num)
 IntMatrix mtm::operator>=(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) >= num)
             {
@@ -174,9 +174,9 @@ IntMatrix mtm::operator>=(IntMatrix& matrix, int num)
 IntMatrix mtm::operator==(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) == num)
             {
@@ -192,9 +192,9 @@ IntMatrix mtm::operator==(IntMatrix& matrix, int num)
 IntMatrix mtm::operator!=(IntMatrix& matrix, int num)
 {
     IntMatrix matrix_new(matrix);
-    for (int j = 1; j <= matrix_new.height(); ++j)
+    for (int j = 0; j < matrix_new.height(); ++j)
     {
-        for (int i = 1; i <= matrix_new.width(); ++i)
+        for (int i = 0; i < matrix_new.width(); ++i)
         {
             if(matrix_new(j,i) != num)
             {
@@ -212,9 +212,9 @@ IntMatrix IntMatrix::transpose() const
 {
     Dimensions d(this->width(),this->height());
     IntMatrix matrix(d);
-    for (int j = 1; j <= matrix.height(); ++j)
+    for (int j = 0; j < matrix.height(); ++j)
     {
-        for (int i = 1; i <= matrix.width(); ++i)
+        for (int i = 0; i < matrix.width(); ++i)
         {
             matrix(j,i) = (*this)(i,j);
         }
@@ -225,8 +225,10 @@ IntMatrix IntMatrix::transpose() const
 IntMatrix mtm::operator+(const IntMatrix &matrix1, const IntMatrix &matrix2)
 {
     IntMatrix matrix(matrix1.getDimensions());
-    for (int i = 1; i <= matrix.height(); ++i) {
-        for (int j = 1; j <= matrix.width(); ++j) {
+    for (int i = 0; i < matrix.height(); ++i)
+    {
+        for (int j = 0; j < matrix.width(); ++j)
+        {
             matrix(i,j) = matrix1(i,j) + matrix2(i,j);
         }
     }
@@ -235,9 +237,9 @@ IntMatrix mtm::operator+(const IntMatrix &matrix1, const IntMatrix &matrix2)
 
 IntMatrix IntMatrix::operator-() const {
     IntMatrix matrix(this->getDimensions());
-    for (int j = 1; j <= matrix.height(); ++j)
+    for (int j = 0; j < matrix.height(); ++j)
     {
-        for (int i = 1; i <= matrix.width(); ++i)
+        for (int i = 0; i < matrix.width(); ++i)
         {
             matrix(j,i) = -(*this)(j,i);
         }
@@ -253,8 +255,8 @@ IntMatrix::IntMatrix(const IntMatrix &matrix):dim(matrix.height(),matrix.width()
     {
         row[i] = new int[matrix.width()];
     }
-    for (int i = 1; i <= this->height() ; ++i) {
-        for (int j = 1; j <= this->width(); ++j) {
+    for (int i = 0; i < this->height() ; ++i) {
+        for (int j = 0; j < this->width(); ++j) {
             (*this)(i,j) = matrix(i,j);
         }
     }
@@ -265,11 +267,11 @@ Dimensions IntMatrix::getDimensions() const {
 }
 
 int& IntMatrix::operator()(int row_num, int col_num) {
-    return row[row_num - 1][col_num - 1];
+    return row[row_num][col_num];
 }
 
 const int& IntMatrix::operator()(int row_num, int col_num) const {
-    return row[row_num - 1][col_num - 1];
+    return row[row_num][col_num];
 }
 
 IntMatrix mtm::operator-(const IntMatrix &matrix1, const IntMatrix &matrix2) {
@@ -280,6 +282,24 @@ IntMatrix& IntMatrix::operator+=(const int value) {
     IntMatrix m(this->getDimensions(),value);
     *this = *this + m;
     return *this;
+}
+
+IntMatrix::iterator IntMatrix::begin()
+{
+    return iterator(this,1);
+}
+
+IntMatrix::iterator IntMatrix::end()
+{
+    return iterator(this,this->size() + 1);
+}
+
+IntMatrix::const_iterator IntMatrix::begin() const {
+    return const_iterator(this,1);
+}
+
+IntMatrix::const_iterator IntMatrix::end() const {
+    return const_iterator(this,this->size() + 1);
 }
 
 IntMatrix mtm::operator+(const IntMatrix& matrix, const int value){
@@ -294,9 +314,9 @@ IntMatrix mtm::operator+(const int value, const IntMatrix& matrix){
 
 bool mtm::any(const IntMatrix& matrix)
 {
-    for (int i = 1; i <= matrix.height(); ++i)
+    for (int i = 0; i <matrix.height(); ++i)
     {
-        for (int j = 1; j <= matrix.width(); ++j)
+        for (int j = 0; j < matrix.width(); ++j)
         {
             if(matrix(i,j) != 0)
             {
@@ -309,9 +329,9 @@ bool mtm::any(const IntMatrix& matrix)
 
 bool mtm::all(const IntMatrix& matrix)
 {
-    for (int i = 1; i <= matrix.height(); ++i)
+    for (int i = 0; i < matrix.height(); ++i)
     {
-        for (int j = 1; j <= matrix.width(); ++j)
+        for (int j = 0; j < matrix.width(); ++j)
         {
             if(matrix(i,j) == 0)
             {
@@ -322,10 +342,77 @@ bool mtm::all(const IntMatrix& matrix)
     return true;
 }
 
-bool IntMatrix::Iterator::operator==(const IntMatrix::Iterator &it) const {
+IntMatrix::iterator::iterator(IntMatrix *matrix, int index):matrix(matrix),index(index) {}
+
+int& IntMatrix::iterator::operator*() {
+    int col_index = index % matrix->width();
+    if(col_index == 0){
+        col_index = matrix->width();
+    }
+    int row_index;
+    if(index % matrix->width() == 0)
+    {
+        row_index = index/matrix->width();
+    } else
+    {
+        row_index = (index/matrix->width() )+ 1;
+    }
+    return (*matrix)(row_index - 1, col_index - 1);
+}
+
+
+bool IntMatrix::iterator::operator==(const IntMatrix::iterator &it) const {
     return this->index == it.index;
 }
 
-bool IntMatrix::Iterator::operator!=(const IntMatrix::Iterator &it) const {
+bool IntMatrix::iterator::operator!=(const IntMatrix::iterator &it) const {
     return this->index != it.index;
+}
+
+IntMatrix::iterator& IntMatrix::iterator::operator++() {
+    index++;
+    return *this;
+}
+
+IntMatrix::iterator IntMatrix::iterator::operator++(int) {
+    iterator result = *this;
+    ++(*this);
+    return result;
+}
+
+IntMatrix::const_iterator::const_iterator(const IntMatrix *matrix, int index):matrix(matrix),index(index) {}
+
+const int& IntMatrix::const_iterator::operator*() const {
+    int col_index = index % matrix->width();
+    if(col_index == 0){
+        col_index = matrix->width();
+    }
+    int row_index;
+    if(index % matrix->width() == 0)
+    {
+        row_index = index/matrix->width();
+    } else
+    {
+        row_index = (index/matrix->width() )+ 1;
+    }
+    return (*matrix)(row_index - 1, col_index - 1);
+}
+
+bool IntMatrix::const_iterator::operator==(const IntMatrix::const_iterator &it) const {
+    return this->index == it.index;
+}
+
+bool IntMatrix::const_iterator::operator!=(const IntMatrix::const_iterator &it) const {
+    return this->index != it.index;
+}
+
+IntMatrix::const_iterator& IntMatrix::const_iterator::operator++() {
+    index++;
+    return *this;
+}
+
+IntMatrix::const_iterator IntMatrix::const_iterator::operator++(int) {
+    const_iterator result = *this;
+    ++(*this);
+    return result;
 }

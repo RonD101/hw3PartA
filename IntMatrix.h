@@ -13,9 +13,12 @@ namespace mtm {
         Dimensions dim;
         Dimensions getDimensions() const;
     public:
-        class Iterator;
-        Iterator begin() const;
-        Iterator end() const;
+        class iterator;
+        class const_iterator;
+        iterator begin();
+        iterator end();
+        const_iterator begin() const;
+        const_iterator end() const;
         explicit IntMatrix(const Dimensions& dimensions, int value = 0);
         ~IntMatrix();
         IntMatrix& operator=(const IntMatrix& matrix);
@@ -47,19 +50,33 @@ namespace mtm {
     bool any(const IntMatrix& matrix);
     bool all(const IntMatrix& matrix);
 
-    class IntMatrix::Iterator{
+    class IntMatrix::iterator{
+        IntMatrix* matrix;
+        int index;
+        friend class IntMatrix;
+        iterator(IntMatrix* matrix, int index);
+    public:
+        int& operator*();
+        iterator& operator++(); // prefix (++it)
+        iterator operator++(int);
+        bool operator==(const iterator& it) const;
+        bool operator!=(const iterator& it) const;
+        iterator(const iterator&) = default;
+        iterator& operator=(const iterator&) = default;
+    };
+    class IntMatrix::const_iterator{
         const IntMatrix* matrix;
         int index;
         friend class IntMatrix;
-        Iterator(const IntMatrix* matrix, int index);
+        const_iterator(const IntMatrix* matrix, int index);
     public:
         const int& operator*() const;
-        Iterator& operator++(); // prefix (++it)
-        Iterator operator++(int);
-        bool operator==(const Iterator& it) const;
-        bool operator!=(const Iterator& it) const;
-        Iterator(const Iterator&) = default;
-        Iterator& operator=(const Iterator&) = default;
+        const_iterator& operator++(); // prefix (++it)
+        const_iterator operator++(int);
+        bool operator==(const const_iterator& it) const;
+        bool operator!=(const const_iterator& it) const;
+        const_iterator(const const_iterator&) = default;
+        const_iterator& operator=(const const_iterator&) = default;
     };
 }
 #endif //HW3_INTMATRIX_H

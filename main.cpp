@@ -12,6 +12,7 @@ int main() {
     IntMatrix m4 = m.transpose().transpose();
     m4 = m3;
     m4 = -m4;
+    cout << m3 - -m3 << endl;
     cout << m3 << endl;
     m(1,2) = -7;
     cout << m <<endl;
@@ -24,7 +25,7 @@ int main() {
     m3 = IntMatrix::Identity(4);
     cout << m3 << endl;
     cout << m.width() << "*" << m.height() << "=" << m.size() << endl;
-    m2(3,4) = -2;
+    m2(2,3) = -2;
     cout << m2 << endl;
     IntMatrix mc(m2);
     cout << mc << endl;
@@ -46,6 +47,29 @@ int main() {
     cout << -1 + (m2 + 5) << endl;
     cout << "all: " << all(m3) << " \nall+1:" << all(m3 + 1) << endl;
     cout << "any: " << any(m3) << " \nany+1:" << any(IntMatrix(d)) << endl;
+    Dimensions di (4,6);
+    IntMatrix mi(di);
+    int counter = 0;
+    IntMatrix::iterator it2 = mi.begin();
+    it2++;
+    ++it2;
+    for (IntMatrix::iterator it = mi.begin(); it != mi.end(); ++it)
+    {
+        counter++;
+        if(it2 == it)
+            cout << counter << ":yes" << endl;
+
+        *it = counter;
+    }
+    cout << mi << endl;
+    for (int element : mi) {
+        cout << element << endl; }
+    const IntMatrix mi2(mi);
+    for (IntMatrix::const_iterator it = mi2.begin(); it != mi2.end(); ++it)
+    {
+        cout << *it << endl;
+    }
+
 //    int* n = new int;
 //    *n = 2;
     return 0;
