@@ -98,6 +98,116 @@ IntMatrix& IntMatrix::operator=(const IntMatrix& matrix)
     return *this;
 }
 
+IntMatrix mtm::operator<(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) < num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+
+IntMatrix mtm::operator<=(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) <= num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+IntMatrix mtm::operator>(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) > num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+IntMatrix mtm::operator>=(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) >= num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+IntMatrix mtm::operator==(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) == num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+IntMatrix mtm::operator!=(IntMatrix& matrix, int num)
+{
+    IntMatrix matrix_new(matrix);
+    for (int j = 1; j <= matrix_new.height(); ++j)
+    {
+        for (int i = 1; i <= matrix_new.width(); ++i)
+        {
+            if(matrix_new(j,i) != num)
+            {
+                matrix_new(j,i) = 1;
+            } else
+            {
+                matrix_new(j,i) = 0;
+            }
+        }
+    }
+    return matrix_new;
+}
+
 IntMatrix IntMatrix::transpose() const
 {
     Dimensions d(this->width(),this->height());

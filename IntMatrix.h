@@ -30,5 +30,11 @@ namespace mtm {
     };
     std::ostream& operator<<(std::ostream& os, const IntMatrix& matrix);
     IntMatrix operator+(const IntMatrix& matrix1, const IntMatrix& matrix2);
+    IntMatrix operator<(IntMatrix& matrix, int num);
+    IntMatrix operator<=(IntMatrix& matrix, int num);
+    IntMatrix operator>(IntMatrix& matrix, int num);
+    IntMatrix operator>=(IntMatrix& matrix, int num);
+    IntMatrix operator==(IntMatrix& matrix, int num);
+    IntMatrix operator!=(IntMatrix& matrix, int num);
 }
 #endif //HW3_INTMATRIX_H
